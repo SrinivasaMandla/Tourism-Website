@@ -61,7 +61,7 @@ const Booking = () => {
         if (isLoggedIn) {
             // User is logged in, proceed with booking
             // Implement your booking logic here
-            console.log('Booking success!');
+             console.log('Booking success!');
         } else {
             // User is not logged in, show alert message
             alert('Please login for booking.');
