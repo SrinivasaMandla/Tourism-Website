@@ -1,0 +1,59 @@
+/* Registration and Login forms  */
+
+.Register-form{
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(133, 133, 133, 0.707);
+    display: flex;
+    justify-content: center;
+    margin: 0px 20%;    
+}
+.Register-form div{
+    width: 50%;
+}
+.register-left{
+    background-color: aliceblue;
+    border-radius:5px 0px 0px 5px;
+}
+.register-right{
+    background-color: rgba(253, 152, 36, 0.91);
+    text-align: center;
+    border-radius:0px 5px 5px 0px;
+}
+.register-right img{
+    width: 17%;
+    position: relative;
+    bottom: 30px;
+}
+.register-right h3{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    color: white;
+    position: relative;
+    bottom: 15px;
+}
+.register-right input{
+    border: none;
+    border-radius: 5px;
+    padding: 7px 15px;
+    margin-bottom: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.register-right button{
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+}
+.register-right p {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.register-right a {
+    text-decoration: none;
+    color: black;
+    padding-left: 6px;
+    font-weight: bold;
+}

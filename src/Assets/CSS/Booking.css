@@ -1,0 +1,224 @@
+/* Booking Components styles */
+
+.booking-card img {
+    border-radius: 5px;
+    height: 350px;
+    width: 100%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.176);
+}
+
+.booking-cardright {
+    height: 28em;
+    border-radius: 5px;
+    padding-left: 3% !important;
+}
+
+.booking-right p {
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
+    width: 200px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.booking-right .head {
+    font-size: 25px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+}
+
+.booking-form {
+    border-radius: 5px;
+    padding: 1em;
+    width: 80%;
+}
+
+.booking-form input {
+    border: none;
+    padding: 20px 5px 0px 5px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+    width: 100%;
+}
+
+.booking-botton p {
+    border-bottom: none;
+    padding: 15px 0px;
+    margin: 0px;
+}
+
+.booking-botton span {
+    padding-left: 5em;
+}
+
+.booking-botton button {
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(255, 68, 0, 0.802);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    color: white;
+    padding: 5px 60px;
+}
+
+.booking-desc {
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.booking-desc h5 {
+    font-family: system-ui;
+    font-weight: 600;
+    padding: 8px 0px;
+}
+
+.booking-desc p {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(72, 72, 72, 0.882);
+}
+
+.booking-desc span {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(72, 72, 72, 0.882);
+}
+
+.booking-descrtion {
+    display: flex;
+    justify-content: space-between;
+}
+
+.description {
+    width: 100%;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.booking-reviews {
+    border-radius: 5px;
+}
+
+.booking-reviews h4 {
+    font-family: system-ui;
+    padding-bottom: 25px;
+}
+
+.booking-reviews i {
+    padding-right: 6px;
+    padding-bottom: 30px;
+}
+
+.reviews-name {
+    margin-bottom: 40px;
+    border: 1.5px solid rgb(255, 128, 0);
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.reviews-name input {
+    border-radius: 5px;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 5px 10px;
+    width: 60%;
+    outline: none;
+}
+
+.reviews-name button {
+    border: none;
+    border-radius: 20px;
+    background-color: orange;
+    color: white;
+    font-family: system-ui;
+    font-weight: 600;
+    padding: 5px 15px;
+    margin-left: 18%;
+}
+
+.reviews-last {
+    border-radius: 5px;
+    position: relative;
+    margin-bottom: 5px;
+    padding-top: 5px;
+}
+
+.reviews-last img {
+    width: 12%;
+}
+
+.reviews-last b {
+    position: relative;
+    bottom: 15px;
+    font-size: 18px;
+    text-transform: capitalize;
+}
+
+.reviews-last span {
+    position: absolute;
+    left: 65px;
+    top: 35px;
+    font-size: 14.5px;
+    font-family: sans-serif;
+}
+
+.reviews-last p {
+    position: absolute;
+    right: 0px;
+    top: 29px;
+    font-weight: 600;
+}
+
+.reviews-last h6 {
+    padding: 5px 64.5px;
+    color: rgba(0, 0, 0, 0.708);
+    font-weight: 600;
+    
+}
+.reviews-last h5::first-letter {
+    text-transform: uppercase;
+}
+
+.ratingstar {
+    font-size: 30px;
+    position: relative;
+    bottom: 20px;
+}
+
+/* BookSuccess page style  */
+.booked-page {
+    text-align: center;
+    padding: 50px 0px;
+    margin-top: 50px;
+}
+
+.booked-page img {
+    width: 50px;
+    padding-bottom: 15px;
+}
+
+.booked-page h3 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-bottom: 12px;
+}
+
+.booked-page p {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    padding-bottom: 5px;
+}
+
+.booked-page button {
+    background-color: orange;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 3px 13px;
+    font-weight: 600;
+
+}
