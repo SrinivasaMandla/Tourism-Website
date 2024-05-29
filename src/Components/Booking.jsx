@@ -15,7 +15,7 @@ const Booking = () => {
     const [product, setProduct] = useState(null);
     const { id } = useParams();
 
-    const [fullName, setFullName] = useState('');
+    const [fullName, setFullName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState('');
     const [date, setDate] = useState('');
     const [numPeople, setNumPeople] = useState('');
