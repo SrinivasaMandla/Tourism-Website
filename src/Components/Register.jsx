@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -7,115 +7,106 @@ import register from '../Assets/Images/register.png';
 import user from '../Assets/Images/user.png';
 import Footer from './Footer';
 
-function Register() {
+const Register = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+                              
+  const handleRegister = async () => {
+    if (!username.trim()) {
+      alert("Please enter a username.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email === "" || !emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-  const navigation=useNavigate();
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
 
-  const [formData, setFormData] = useState({
-    userName: '',
-    email: '',
-    password: ''
-  });
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    if (username && email && password) {
+      const userData = { username, email, password };
+    
+      try {
+        const response = await fetch(
+          "https://tour-booking-tu7f.onrender.com/api/v1/auth/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          }
+        );
+    
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Registration failed:", errorData);
+          alert(`Registration failed: ${errorData.message || "Please try again."}`);
+        } else {
+          const data = await response.json();
+          console.log("Registration successful:", data);
+          localStorage.setItem("userData", JSON.stringify(userData));
+          alert("Registration successful.");
+          // After successful registration, navigate to login page or perform any other necessary actions
+           navigate("/login");
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("An error occurred. Please try again.");
+      }
+    } else {
+      alert("Please enter username, email, and password.");
+    }
   };
-
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    if (formData.userName === '') {
-      alert('User name is required');
-      return;
-    }
-    if (formData.email === '') {
-      alert('Email is required');
-      return;
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      alert('Email is invalid');
-      return;
-    }
-    if (formData.password === '') {
-      alert('Password is required');
-      return;
-    } else if (formData.password.length < 6) {
-      alert('Password must be at least 6 characters long');
-      return;
-    }
-  
-    // try {
-    //   const response = await fetch('https://tour-booking-tu7f.onrender.com/api/v1/auth/register', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-  
-    //   const responseData = await response.json();
-  
-    //   if (!response.ok) {
-    //     // Check if there's a specific error message from the server
-    //     if (responseData && responseData.message) {
-    //       throw new Error(responseData.message);
-    //     } else {
-    //       throw new Error('Registration unsuccessful');
-    //     }
-    //   }
-  
-      // Registration successful
-      alert('Registration Successful');
-  
-      // Store data in local storage
-      const userData = {
-        userName: formData.userName,
-        email: formData.email,
-        // You might want to hash or encrypt the password before storing it.
-        // For demonstration purposes, I'm storing it as plain text.
-        password: formData.password
-      };
-  
-      // Convert the userData object to a string before storing it in local storage
-      localStorage.setItem('userData', JSON.stringify(userData));
-  
-      // Optionally, you can redirect the user to another page after successful registration
-      navigation( '/login');
-    // } catch (error) {
-    //   alert(error.message);
-    // }
-  };
-  
 
   return (
     <>
-      <Navbar isLoggedIn={false}/>
-      <div className='register p-5 pb-4'>
-        <div className='Register-form'>
-          <div className='register-left'>
-            <img src={register} alt="register" width='100%' />
+      <Navbar isLoggedIn={false} />
+      <div className="register p-5 pb-4">
+        <div className="Register-form">
+          <div className="register-left">
+            <img src={register} alt="Register" width="100%" />
           </div>
-          <div className='register-right '>
-            <img src={user} alt="user" />
-            <h3>Register</h3>
-            <form onSubmit={handleSubmit}>
-              <input type="text" placeholder='User name' name='userName' value={formData.userName} onChange={handleChange} /><br />
-              <input type="email" placeholder='Email' name='email' value={formData.email} onChange={handleChange} /><br />
-              <input type="password" placeholder='Password' name='password' value={formData.password} onChange={handleChange} /><br />
-              <button>Create Account</button>
+          <div className="register-right">
+            <img src={user} alt="User" />
+            <h3 >Register</h3>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="text"
+                id="UserName"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              /><br />
+              <input
+                type="email"
+                id="Email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              /><br />
+              <input
+                type="password"
+                id="UserPassword"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              /><br />
+              <button onClick={handleRegister}>Create Account</button>
             </form>
-            <p>Already have an Account? <Link to='/login'>Login</Link></p>
+            <p>Already have an account?{" "}<Link to="/login" >Login</Link></p>
           </div>
         </div>
       </div>
-      <Footer/>
-    </ >
-  )
-}
+      <Footer />
+    </>
+  );
+};
+
 export default Register;

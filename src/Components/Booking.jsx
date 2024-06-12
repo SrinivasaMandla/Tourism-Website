@@ -61,7 +61,7 @@ const Booking = () => {
         if (isLoggedIn) {
             // User is logged in, proceed with booking
             // Implement your booking logic here
-             console.log('Booking success!');
+            console.log('Booking success!');
         } else {
             // User is not logged in, show alert message
             alert('Please login for booking.');
@@ -85,7 +85,7 @@ const Booking = () => {
                     <div className="row">
                         <div className="col-md-7 booking-card ">
                             <img src={product.photo} alt={product.title} />
-                            
+
                             <div className='border mt-4 px-5 py-4 booking-desc'>
                                 <h5>{product.title}</h5>
                                 <p>

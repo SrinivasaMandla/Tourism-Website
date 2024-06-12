@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import '../Assets/CSS/Login.css';
-import loginIMG from '../Assets/Images/login.png';
-import user from '../Assets/Images/user.png';
-import Footer from './Footer';
-import { useAuth } from './Authentication';
+import React, { useState } from "react";
+import Navbar from "./Navbar";
+import LoginImg from "../Assets/Images/login.png";
+import LoginImg1 from "../Assets/Images/user.png";
+import Footer from "./Footer";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./Authentication";
 
-function Login() {
+const Login = () => {
   const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: '', password: '' });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.email && formData.password) {
-      const isAuthenticated = AuthenticateUser(formData.email, formData.password);
-      if (isAuthenticated) {
-        login();
-        alert("Login Successful");
-        navigate("/");
-      } else {
-        alert("Invalid email or password");
+  const handleLogin = async () => {
+    if (email && password) {
+      try {
+        const response = await fetch(
+          'https://tour-booking-tu7f.onrender.com/api/v1/auth/login',
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Login Successful:", data);
+          alert("Login successful");
+          localStorage.setItem("userData", JSON.stringify(data));
+          
+          navigate("/");
+          login();
+        } else {
+          const errorData = await response.json();
+          alert(`Login failed: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("An error occurred during login. Please try again.");
       }
     } else {
-      alert("Please enter the email and password.");
+      alert("Please fill in both email and password.");
     }
-  };
-
-  const AuthenticateUser = (email, password) => {
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    return userData && userData.email === email && userData.password === password;
   };
 
   return (
@@ -44,15 +52,15 @@ function Login() {
       <div className='register p-5 pb-4'>
         <div className='Register-form'>
           <div className='register-left'>
-            <img src={loginIMG} alt="register" width='100%' />
+            <img src={LoginImg} alt="register" width='100%' />
           </div>
           <div className='register-right'>
-            <img src={user} alt="user" />
+            <img src={LoginImg1} alt="user" />
             <h3>Login</h3>
-            <form onSubmit={handleSubmit}>
-              <input type="email" placeholder='Email' name='email' value={formData.email} onChange={handleChange} /><br />
-              <input type="password" placeholder='Password' name='password' value={formData.password} onChange={handleChange} /><br />
-              <button type='submit'>Login</button>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder='Email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} /><br />
+              <input type="password" placeholder='Password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} /><br />
+              <button type='submit' onClick={handleLogin}>Login</button>
             </form>
             <p>Don't have an Account? <Link to='/register'>Register</Link></p>
           </div>
@@ -61,6 +69,6 @@ function Login() {
       <Footer />
     </>
   );
-}
+};
 
 export default Login;

@@ -40,9 +40,9 @@ function Navbar() {
                             </li>
                             {isLoggedIn ? (
                                 <>
-                                    {userData && userData.userName && (
+                                    {userData && userData.data.username && (
                                         <li className="nav-item">
-                                            <span className="nav-link usernameid" >{userData.userName}</span>
+                                            <span className="nav-link usernameid" >{userData.data.username}</span>
                                         </li>
                                     )}
                                     <li className="nav-item me-5 ms-2">

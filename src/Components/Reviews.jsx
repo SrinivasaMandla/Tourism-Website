@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import '../Assets/CSS/Booking.css';
-import avatar from "../Assets/Images/avatar.jpg"
+import avatar from "../Assets/Images/avatar.jpg";
 import { useAuth } from './Authentication';
-
 
 const Reviews = ({ product }) => {
     const { isLoggedIn } = useAuth();
-    
+
     const [rating, setRating] = useState(0);
     const [newReview, setNewReview] = useState('');
     const [reviews, setReviews] = useState([]);
@@ -22,7 +21,6 @@ const Reviews = ({ product }) => {
         }
     }
 
-
     const handleStarClick = (index) => {
         setRating(index + 1);
     };
@@ -31,18 +29,13 @@ const Reviews = ({ product }) => {
         setNewReview(e.target.value);
     };
 
-    const handleSubmit = () => {
-        if (isLoggedIn) {
-            // User is logged in, proceed with booking
-            // Implement your booking logic here
-            console.log('Booking success!');
-        } else {
-            // User is not logged in, show alert message
+    const handleSubmit = async () => {
+        if (!isLoggedIn) {
             alert('Please login to submit a review.');
-            return; // Stop further execution
+            return;
         }
+
         if (rating === 0 || newReview.trim() === '') {
-            // Validation failed
             alert("Please select a rating and write a review before submitting.");
             return;
         }
@@ -50,19 +43,19 @@ const Reviews = ({ product }) => {
         const newReviewObj = {
             rating,
             text: newReview,
-            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) // Format date like "March 26, 2024"
+            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
         };
 
         setReviews([...reviews, newReviewObj]);
         setRating(0);
         setNewReview('');
+        console.log('Review submitted successfully!');
     };
-
 
     return (
         <div className='row mx-0'>
             <div className='col-md-7 my-4 border px-5 py-4 booking-reviews'>
-            <h4>Reviews ({product.reviews.length+reviews.length} reviews)</h4>
+                <h4>Reviews ({product.reviews.length + reviews.length} reviews)</h4>
                 {[...Array(5)].map((_, index) => (
                     <span className='ratingstar'
                         key={index}
@@ -82,9 +75,9 @@ const Reviews = ({ product }) => {
 
                     return (
                         <div className='reviews-last border' key={index}>
-                            <img src={avatar} alt="avatar"/>
+                            <img src={avatar} alt="avatar" />
                             <b>{review.username}</b>
-                            <span >{formattedDate}</span>
+                            <span>{formattedDate}</span>
                             <p>
                                 {review.rating.toFixed(1)}
                                 <i className="fa-solid fa-star" style={{ color: "#fa9200", fontSize: '15px' }}></i>
@@ -96,9 +89,9 @@ const Reviews = ({ product }) => {
 
                 {reviews.map((review, index) => (
                     <div className='reviews-last border' key={index}>
-                        <img src={avatar} alt="avatar"/>
-                        {userData && userData.userName && (
-                            <b>{userData.userName}</b>
+                        <img src={avatar} alt="avatar" />
+                        {userData && userData.data.username && (
+                            <b>{userData.data.username}</b>
                         )}
                         <span>{review.date}</span>
                         <p>
