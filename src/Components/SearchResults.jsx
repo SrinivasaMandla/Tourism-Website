@@ -45,10 +45,12 @@ function SearchResults() {
                                                 ) : "no reviews"} ({item.reviews.length}) {""}
                                             </span>
                                         </div>
-                                        <h6 className="card-title py-2">{item.title}</h6>
+                                        <Link to={`/tours/${item._id}`} style={{ textDecoration: 'none' }}>
+                                                <h6 className="card-title py-2">{item.title}</h6>
+                                            </Link>
                                         <div className='tour-cardtext3'>
                                             <p><strong>${item.price} </strong>/per person</p>
-                                            <Link to={`/booking/${item._id}`} style={{ textDecoration: 'none' }}>
+                                            <Link to={`/tours/${item._id}`} style={{ textDecoration: 'none' }}>
                                                 <button>Book now</button>
                                             </Link>
                                         </div>

@@ -7,10 +7,9 @@ import '../Assets/CSS/Booking.css';
 import "../Assets/CSS/Loader.css";
 import { useAuth } from './Authentication';
 
-
 const Booking = () => {
-    const { isLoggedIn } = useAuth();
-    const navigator = useNavigate();
+    const { isLoggedIn, token } = useAuth(); // Assuming useAuth provides the token
+    const navigate = useNavigate();
 
     const [product, setProduct] = useState(null);
     const { id } = useParams();
@@ -57,23 +56,47 @@ const Booking = () => {
         return true;
     };
 
-    const handleSubmit = () => {
-        if (isLoggedIn) {
-            // User is logged in, proceed with booking
-            // Implement your booking logic here
-            console.log('Booking success!');
-        } else {
-            // User is not logged in, show alert message
+    const handleSubmit = async () => {
+        if (!isLoggedIn) {
             alert('Please login for booking.');
             return; // Stop further execution
         }
 
         if (validate()) {
             setIsSubmitting(true);
-            // Handle form submission if no errors
-            console.log('Form submitted');
-            // Redirect to the "booked" page
-            navigator("/booking/successful"); // Redirect to the "booked" page
+
+            const bookingDetails = {
+                fullName,
+                phoneNumber,
+                date,
+                numPeople,
+                tourId: id,
+            };
+
+            try {
+                const response = await fetch('https://tour-booking-tu7f.onrender.com/api/v1/booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Include the token in the headers
+                    },
+                    body: JSON.stringify(bookingDetails),
+                });
+
+                const result = await response.json();
+                    console.log(result);
+                if (response.ok) {
+                    localStorage.setItem('bookingData', JSON.stringify(result.data));
+                    console.log('Booking success!', result.data);
+                    navigate("/booking/successful"); // Redirect to the "booked" page
+                } else {
+                    alert('Booking failed: ' + result.message);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     };
 

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import  { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import '../Assets/CSS/Booking.css';
 import avatar from "../Assets/Images/avatar.jpg";
 import { useAuth } from './Authentication';
 
-const Reviews = ({ product }) => {
+const Reviews = ({product}) => {
     const { isLoggedIn } = useAuth();
-
+    const { id: productId } = useParams(); // useParams to get the product ID from the URL
     const [rating, setRating] = useState(0);
     const [newReview, setNewReview] = useState('');
     const [reviews, setReviews] = useState([]);
@@ -20,6 +21,13 @@ const Reviews = ({ product }) => {
             console.error("Error parsing user data:", error);
         }
     }
+
+    useEffect(() => {
+        const storedReviews = localStorage.getItem(`reviews_${productId}`);
+        if (storedReviews) {
+            setReviews(JSON.parse(storedReviews));
+        }
+    }, [productId]);
 
     const handleStarClick = (index) => {
         setRating(index + 1);
@@ -46,10 +54,31 @@ const Reviews = ({ product }) => {
             date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
         };
 
-        setReviews([...reviews, newReviewObj]);
-        setRating(0);
-        setNewReview('');
-        console.log('Review submitted successfully!');
+        try {
+            const response = await fetch(`https://tour-booking-tu7f.onrender.com/api/v1/review/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    rating: newReviewObj.rating,
+                    reviewText: newReviewObj.text,
+                    createdAt: new Date()
+                })
+            });
+
+            if (response.ok) {
+                setReviews([...reviews, newReviewObj]);
+                localStorage.setItem(`reviews_${productId}`, JSON.stringify([...reviews, newReviewObj]));
+                setRating(0);
+                setNewReview('');
+                console.log('Review submitted successfully!');
+            } else {
+                console.error('Error submitting review:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error submitting review:', error);
+        }
     };
 
     return (
